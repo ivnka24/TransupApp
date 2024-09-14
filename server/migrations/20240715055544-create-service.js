@@ -31,6 +31,10 @@ module.exports = {
       deskripsi: {
         type: Sequelize.STRING,
       },
+      statusService:{
+        type : Sequelize.STRING,
+        defaultValue : "Proses Service"
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

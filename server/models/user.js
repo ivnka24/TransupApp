@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const hashedPassword = require("../helpers/hashedPassword");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,14 +12,56 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    namaLengkap: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  User.init(
+    {
+      namaLengkap: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: "Nama Lengkap tidak boleh kosong" },
+          notNull: { msg: "Nama Lengkap tidak boleh kosong" },
+        },
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "Username sudah di pakai",
+        },
+        validate: {
+          notEmpty: { msg: "Username Tidak boleh kosong" },
+          notNull: { msg: "Username Tidak boleh kosong" },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: "Password Tidak boleh kosong" },
+          notNull: { msg: "Password Tidak boleh kosong" },
+        },
+      },
+      role: DataTypes.STRING,
+    },
+    {
+      hooks: {
+        beforeCreate(user) {
+          user.password = hashedPassword(user.password);
+        },
+        // beforeUpdate(user) {
+        //   if (user.changed("password")) {
+        //     user.password = hashedPassword(user.password);
+        //   }
+        // },
+        // beforeSave(user) {
+        //   if (user.changed("password")) {
+        //     user.password = hashedPassword(user.password);
+        //   }
+        // },
+      },
+      sequelize,
+      modelName: "User",
+    }
+  );
   return User;
 };

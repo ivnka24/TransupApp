@@ -22,6 +22,7 @@ module.exports = {
       },
       role: {
         type: Sequelize.STRING,
+        defaultValue: "Karyawan",
       },
       createdAt: {
         allowNull: false,
