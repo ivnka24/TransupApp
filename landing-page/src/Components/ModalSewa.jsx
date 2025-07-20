@@ -7,12 +7,18 @@ function ModalSewa() {
     phone: "",
     social: "",
     destination: "",
+    placeLocation: "Probolinggo", // Default to Probolinggo
     startDate: "",
     startTime: "",
     endDate: "",
     endTime: "",
     vehicleType: "110CC",
   });
+
+  const whatsappNumbers = {
+    Probolinggo: "6282257933579",
+    Malang: "6282221674996",
+  };
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -30,14 +36,16 @@ function ModalSewa() {
       `Nomor HP: ${formData.phone}\n` +
       `Medsos (IG/FB): ${formData.social}\n` +
       `Tujuan: ${formData.destination}\n` +
+      `Lokasi Sewa: ${formData.placeLocation}\n` + // Added placeLocation to the message
       `Tanggal Sewa: ${formData.startDate}\n` +
       `Jam Sewa: ${formData.startTime}\n` +
       `Tanggal Kembali: ${formData.endDate}\n` +
       `Jam Kembali: ${formData.endTime}\n` +
       `Jenis Kendaraan: ${formData.vehicleType}`;
 
+    const selectedWhatsappNumber = whatsappNumbers[formData.placeLocation];
     const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/6282257933579?text=${encodedMessage}`;
+    const whatsappURL = `https://wa.me/${selectedWhatsappNumber}?text=${encodedMessage}`;
 
     window.open(whatsappURL, "_blank");
     setFormData({
@@ -45,6 +53,7 @@ function ModalSewa() {
       phone: "",
       social: "",
       destination: "",
+      placeLocation: "Probolinggo", // Reset to default Probolinggo
       startDate: "",
       startTime: "",
       endDate: "",
@@ -137,6 +146,26 @@ function ModalSewa() {
                     placeholder="Masukkan tujuan Anda"
                   />
                 </div>
+              </div>
+
+              {/* New Dropdown for placeLocation */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 mb-2"
+                  htmlFor="placeLocation"
+                >
+                  Lokasi Sewa
+                </label>
+                <select
+                  id="placeLocation"
+                  name="placeLocation"
+                  value={formData.placeLocation}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                >
+                  <option value="Probolinggo">Probolinggo</option>
+                  <option value="Malang">Malang</option>
+                </select>
               </div>
 
               <div className="flex gap-4 mb-4">

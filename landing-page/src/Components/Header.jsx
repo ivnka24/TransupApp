@@ -3,11 +3,11 @@ import logo from "../assets/logo2.png";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("ID");
+  // const [language, setLanguage] = useState("ID");
 
-  const handleLanguageChange = () => {
-    setLanguage((prevLanguage) => (prevLanguage === "ID" ? "ENG" : "ID"));
-  };
+  // const handleLanguageChange = () => {
+  //   setLanguage((prevLanguage) => (prevLanguage === "ID" ? "ENG" : "ID"));
+  // };
 
   return (
     <header className="w-full h-[64px] flex justify-between items-center px-4">
